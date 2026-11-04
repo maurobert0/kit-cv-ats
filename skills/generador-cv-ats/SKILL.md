@@ -46,7 +46,7 @@ Lee los tres archivos de `references/` completos antes de generar el primer CV d
 1. **Recibir la oferta.** Necesitas el texto completo. Si te pasa un link que no puedes abrir, pídele que pegue el texto.
 2. **Analizar y mapear** según `references/analisis-oferta.md`.
 3. **Contarle el diagnóstico** en un mensaje corto: qué tan bien encaja, qué keywords cubre con verdad, brechas importantes y si conviene postular. Si el fit es bajo o la oferta choca con lo que la persona dijo que no quiere, pregúntale si sigue. Si el fit es bueno, sigue sin preguntar.
-4. **Elegir template e idioma.** Si no eligió template, usa el que haya usado antes en la conversación o `clasico`. El idioma sigue a la oferta (ver `redaccion-e-idioma.md`). Si pide dos idiomas, generas dos archivos.
+4. **Elegir template e idioma.** Si la persona no eligió estilo y es su primer CV de la conversación, ofrécele los seis con una línea de descripción cada uno (sacadas de `templates/LEEME.md`) y usa `clasico` si no tiene preferencia. Después usa siempre el mismo salvo que pida cambiarlo. El idioma sigue a la oferta (ver `redaccion-e-idioma.md`). Si pide dos idiomas, generas dos archivos.
 5. **Generar el CV** copiando el template y reemplazando solo el contenido entre marcadores, siguiendo `reglas-ats.md` y `redaccion-e-idioma.md`. En el archivo final, elimina los comentarios de instrucciones y de ayuda, pero deja los marcadores `INICIO` y `FIN`.
 6. **Verificar.** Si puedes ejecutar Python, usa `scripts/keyword_check.py`. Si no, haz la verificación a mano con la misma lógica. Después pasa el checklist de `reglas-ats.md`.
 7. **Entregar** (ver "Cómo entregar").
@@ -68,6 +68,7 @@ Elige la primera opción que funcione en la plataforma:
 En el mensaje de entrega, en pocas líneas:
 - Cobertura lograda y keywords de la oferta que no se incluyeron porque no las tiene.
 - Cómo pasarlo a PDF: abrir el HTML en Chrome o Edge, imprimir (Ctrl+P o Cmd+P), destino "Guardar como PDF" (no "Microsoft Print to PDF", que en algunas versiones de Windows genera una imagen sin texto), tamaño Carta o A4 según el país, márgenes predeterminados, activar "Gráficos de fondo" y desactivar "Encabezados y pies de página".
+- Algunos templates cargan fuentes desde internet (jsdelivr, no Google Fonts), así que conviene abrir el HTML con conexión antes de imprimir. Si no hay conexión, el CV igual se ve bien con las fuentes alternativas.
 - Recordatorio de validar en Jobscan (jobscan.co) subiendo el PDF y pegando la oferta, y de pegarte el resultado si quiere mejorarlo.
 
 ## Datos nuevos durante la conversación

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--
   TEMPLATE: clasico
-  Versión del formato: 1.0
+  Versión del formato: 1.1
 
   INSTRUCCIONES PARA EL AGENTE
   1. Copia este archivo completo. No lo escribas desde cero.
@@ -80,7 +80,7 @@
     font-weight: 700;
     color: var(--acento);
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
     padding-bottom: 3px;
     margin-bottom: 6px;
     border-bottom: 1px solid var(--linea);
@@ -93,16 +93,16 @@
 
   /* Experiencia */
   .puesto { margin-bottom: 9px; break-inside: avoid; page-break-inside: avoid; }
+  /* Cargo y fechas forman una sola línea de texto con el separador " | " del contenido.
+     Con la fecha alineada a la derecha, pdftotext la separa y la lee después de la empresa. */
   .puesto-encabezado, .entrada-encabezado {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px;
+    color: var(--tenue);
     break-after: avoid;
     page-break-after: avoid;
   }
-  .cargo { font-weight: 700; }
-  .fechas { font-size: 9.5pt; color: var(--tenue); white-space: nowrap; }
+  .puesto-encabezado { font-size: var(--tamano-base); }
+  .cargo { font-weight: 700; color: var(--tinta); }
+  .fechas { white-space: nowrap; }
   .empresa { margin-bottom: 3px; }
   .nota { color: var(--tenue); }
 
@@ -113,7 +113,7 @@
 
   /* Educación, certificaciones, proyectos */
   .entrada { margin-bottom: 6px; break-inside: avoid; page-break-inside: avoid; }
-  .entrada-titulo { font-weight: 700; }
+  .entrada-titulo { font-weight: 700; color: var(--tinta); }
   .detalle { color: var(--tenue); }
 
   @page { margin: 14mm 16mm; }
@@ -123,7 +123,6 @@
   }
   @media screen and (max-width: 760px) {
     .cv { margin: 0; padding: 20px 16px; box-shadow: none; }
-    .puesto-encabezado, .entrada-encabezado { flex-direction: column; gap: 0; }
   }
 </style>
 </head>
@@ -159,13 +158,13 @@
 <!-- FIN:habilidades -->
 
 <!-- INICIO:experiencia -->
+<!-- Cargo y fechas en la misma línea, separados por " | ". Fechas con guion simple: Mar 2022 - Presente. -->
 <section class="seccion experiencia">
   <h2>Experiencia Profesional</h2>
 
   <div class="puesto">
     <div class="puesto-encabezado">
-      <span class="cargo">Product Designer</span>
-      <span class="fechas">Mar 2022 - Presente</span>
+      <span class="cargo">Product Designer</span> | <span class="fechas">Mar 2022 - Presente</span>
     </div>
     <p class="empresa">Fintech Ejemplo, Montevideo, Uruguay <span class="nota">| Billetera digital, 400.000 usuarios activos</span></p>
     <ul>
@@ -178,8 +177,7 @@
 
   <div class="puesto">
     <div class="puesto-encabezado">
-      <span class="cargo">UX/UI Designer</span>
-      <span class="fechas">Feb 2019 - Feb 2022</span>
+      <span class="cargo">UX/UI Designer</span> | <span class="fechas">Feb 2019 - Feb 2022</span>
     </div>
     <p class="empresa">Tienda Ejemplo, Buenos Aires, Argentina <span class="nota">| E-commerce de electrónica</span></p>
     <ul>
@@ -191,12 +189,12 @@
 <!-- FIN:experiencia -->
 
 <!-- INICIO:educacion -->
+<!-- Título del estudio y fecha en la misma línea, separados por " | ". -->
 <section class="seccion educacion">
   <h2>Educación</h2>
   <div class="entrada">
     <div class="entrada-encabezado">
-      <span class="entrada-titulo">Licenciatura en Diseño Multimedia</span>
-      <span class="fechas">Dic 2018</span>
+      <span class="entrada-titulo">Licenciatura en Diseño Multimedia</span> | <span class="fechas">Dic 2018</span>
     </div>
     <p>Universidad Ejemplo, Argentina</p>
   </div>

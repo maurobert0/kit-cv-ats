@@ -1,0 +1,16 @@
+{
+  "name": "cv-templates-tools",
+  "private": true,
+  "type": "module",
+  "description": "Herramientas de verificación de los templates de CV",
+  "scripts": {
+    "verificar": "node verificar.mjs",
+    "probar-verificador": "node probar-verificador.mjs",
+    "probar-fuentes": "node probar-fuentes.mjs",
+    "aplicar-contenido": "node aplicar-contenido.mjs"
+  },
+  "dependencies": {
+    "pdfjs-dist": "4.10.38",
+    "playwright": "1.49.1"
+  }
+}
