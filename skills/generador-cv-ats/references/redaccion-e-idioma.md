@@ -9,6 +9,7 @@
 - **Inglés** con verbos de acción sin pronombre: "Led", "Designed", "Manage".
 - Nombres de herramientas, productos, lenguajes y siglas siempre en su forma original (Figma, Kubernetes, Design System, SIEM), salvo que la oferta use una traducción.
 - Tiempo verbal: presente para el puesto actual, pasado para puestos anteriores y logros cerrados.
+- Las keywords con guion (e-commerce, front-end, end-to-end) se escriben como en la oferta, y si una queda partida a fin de línea en el PDF, se reformula la frase para que no quede cortada.
 
 ## Titular
 

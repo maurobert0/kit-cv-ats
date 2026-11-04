@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+  TEMPLATE: analitico
+  Versión del formato: 2.0
+  Estilo: informe de datos. Papel marfil, serif liviana grande, titular resaltado en naranja,
+  líneas punteadas finas y fechas en monoespaciada. Mucho aire.
+
+  INSTRUCCIONES PARA EL AGENTE
+  1. Copia este archivo completo. No lo escribas desde cero.
+  2. Cambia el atributo lang del <html> según el idioma del CV ("es" o "en").
+  3. Cambia el <title>: Nombre_Apellido_CV_Empresa_Puesto, sin tildes ni espacios.
+  4. Reemplaza SOLO el contenido entre cada par de marcadores INICIO y FIN.
+     Puedes borrar bullets, entradas o secciones completas (incluidos sus marcadores).
+     No agregues secciones nuevas ni clases nuevas.
+  5. Del bloque <style>, solo puedes cambiar las variables de :root marcadas como
+     PERSONALIZABLE, y solo si la persona lo pide. Si el nombre ocupa dos líneas,
+     baja --tamano-nombre (mínimo 28pt).
+  6. En el archivo final, borra este comentario y los comentarios de ayuda de cada
+     sección. Deja los marcadores INICIO y FIN: sirven para cambiar de template después.
+
+  CLASES DISPONIBLES
+  .cv, .nombre, .titular, .contacto, .seccion, .puesto, .puesto-encabezado, .cargo,
+  .fechas, .empresa, .nota, .entrada, .entrada-encabezado, .entrada-titulo, .detalle,
+  .compacta
+-->
+<title>Nombre_Apellido_CV_Empresa_Puesto</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/spectral@5.3.0/300.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/spectral@5.3.0/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/dm-mono@5.3.0/400.css">
+<style>
+  :root {
+    /* PERSONALIZABLE: color de acento (resaltado del titular y viñetas). Nunca lleva texto encima
+       que no sea la tinta oscura, y nunca se usa como color de texto */
+    --acento: #ff5a1f;
+    /* PERSONALIZABLE: tipografía del nombre y los títulos. Si no carga, se usa la serif del sistema */
+    --fuente-titulos: Spectral, Cambria, Caladea, Georgia, "Times New Roman", serif;
+    /* PERSONALIZABLE: tipografía del texto */
+    --fuente-texto: Arial, Helvetica, "Liberation Sans", sans-serif;
+    /* PERSONALIZABLE: monoespaciada solo para fechas */
+    --fuente-detalle: "DM Mono", Consolas, Menlo, "DejaVu Sans Mono", "Liberation Mono", monospace;
+    /* PERSONALIZABLE: tamaño base del texto (entre 10pt y 11pt) */
+    --tamano-base: 10pt;
+    /* PERSONALIZABLE: tamaño del nombre (entre 28pt y 44pt). Bájalo si el nombre ocupa dos líneas */
+    --tamano-nombre: 44pt;
+    /* PERSONALIZABLE: interlineado (entre 1.25 y 1.5) */
+    --interlineado: 1.36;
+
+    /* FIJO: no cambiar */
+    --papel: #f4f2ea;
+    --tinta: #0d1321;
+    --tenue: #57534e;
+    --punteado: #8a867c;
+    --filete: #0d1321;
+    --fondo: #dedad0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--fondo); }
+  body {
+    font-family: var(--fuente-texto);
+    font-size: var(--tamano-base);
+    line-height: var(--interlineado);
+    color: var(--tinta);
+    background: var(--fondo);
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "clig" 0, "dlig" 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .cv {
+    max-width: 210mm;
+    margin: 24px auto;
+    padding: 15mm 18mm;
+    background: var(--papel);
+    box-shadow: 0 1px 14px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Encabezado */
+  header { padding-bottom: 14px; border-bottom: 1px solid var(--filete); }
+  .nombre {
+    font-family: var(--fuente-titulos);
+    font-size: var(--tamano-nombre);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .titular {
+    display: inline;
+    font-size: 11.5pt;
+    line-height: 1.75;
+    color: var(--tinta);
+    background: var(--acento);
+    padding: 2px 6px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .contacto { font-size: 9.5pt; color: var(--tenue); margin-top: 10px; }
+  .contacto a { color: inherit; text-decoration: none; }
+
+  /* Secciones */
+  .seccion { margin-top: 22px; }
+  h2 {
+    font-family: var(--fuente-titulos);
+    font-size: 16pt;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--tinta);
+    padding-bottom: 6px;
+    margin-bottom: 11px;
+    border-bottom: 1px dotted var(--filete);
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  p { margin-bottom: 4px; }
+  .habilidades p { margin-bottom: 3px; }
+  .habilidades strong { font-weight: 700; }
+
+  /* Experiencia */
+  .puesto { break-inside: avoid; page-break-inside: avoid; }
+  .puesto + .puesto { margin-top: 12px; padding-top: 12px; border-top: 1px dotted var(--punteado); }
+  /* Cargo y fechas forman una sola línea de texto con el separador " | " del contenido.
+     Con la fecha alineada a la derecha, pdftotext la separa y la lee después de la empresa. */
+  .puesto-encabezado, .entrada-encabezado {
+    color: var(--tenue);
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .puesto-encabezado { font-size: 10.5pt; }
+  .cargo { font-weight: 700; color: var(--tinta); }
+  .fechas { font-family: var(--fuente-detalle); font-size: 0.95em; color: var(--tinta); white-space: nowrap; }
+  .empresa { margin-bottom: 5px; color: var(--tenue); break-after: avoid; page-break-after: avoid; }
+  .nota { color: var(--tenue); }
+
+  ul { padding-left: 15px; list-style: square; }
+  li { margin-bottom: 3px; break-inside: avoid; page-break-inside: avoid; }
+  li::marker { color: var(--acento); }
+  ul.compacta li { margin-bottom: 2px; }
+
+  /* Educación, certificaciones, proyectos */
+  .entrada { break-inside: avoid; page-break-inside: avoid; }
+  .entrada + .entrada { margin-top: 8px; }
+  .entrada-titulo { font-weight: 700; color: var(--tinta); }
+  .detalle { color: var(--tenue); }
+
+  @page { margin: 15mm 18mm; background: var(--papel); }
+  @media print {
+    html, body { background: var(--papel); }
+    .cv { max-width: none; margin: 0; padding: 0; box-shadow: none; }
+  }
+  @media screen and (max-width: 760px) {
+    .cv { margin: 0; padding: 20px 16px; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<main class="cv">
+
+<!-- INICIO:encabezado -->
+<header>
+  <h1 class="nombre">Lucía Fernández</h1>
+  <!-- Formato: [Título exacto de la oferta] | [Competencia 1] | [Competencia 2] | [Herramienta o área clave] -->
+  <p class="titular">Product Designer | Diseño de interacción | Design Systems | Figma</p>
+  <p class="contacto">Montevideo, Uruguay | +598 99 000 000 | lucia.fernandez@email.com | <a href="https://linkedin.com/in/luciafernandez">linkedin.com/in/luciafernandez</a> | <a href="https://luciafernandez.design">luciafernandez.design</a></p>
+</header>
+<!-- FIN:encabezado -->
+
+<!-- INICIO:resumen -->
+<section class="seccion resumen">
+  <h2>Perfil Profesional</h2>
+  <p>Product Designer con 7 años de experiencia en productos digitales B2C y B2B para fintech y comercio electrónico. Diseñé flujos de onboarding, pagos y autogestión usados por más de 400.000 personas, trabajando con equipos de producto, desarrollo y research. Experiencia en design systems, prototipado en Figma, tests de usabilidad, accesibilidad y diseño basado en métricas. Me interesa resolver problemas complejos con soluciones simples y medir el impacto de cada cambio. Inglés avanzado.</p>
+</section>
+<!-- FIN:resumen -->
+
+<!-- INICIO:habilidades -->
+<!-- 4 a 7 líneas. Categoría en negrita. Nivel 1 solo en la línea "Conocimientos de". -->
+<section class="seccion habilidades">
+  <h2>Habilidades</h2>
+  <p><strong>Diseño de producto:</strong> diseño de interacción, arquitectura de información, wireframes, prototipado de alta fidelidad, diseño responsive, accesibilidad (WCAG 2.1)</p>
+  <p><strong>Design systems:</strong> librerías de componentes, tokens de diseño, documentación, handoff a desarrollo, gobernanza y versionado</p>
+  <p><strong>Research:</strong> tests de usabilidad moderados y no moderados, entrevistas, encuestas, análisis de métricas de producto</p>
+  <p><strong>Colaboración:</strong> facilitación de talleres, discovery con producto, priorización con desarrollo, presentación a stakeholders</p>
+  <p><strong>Metodologías:</strong> Design Thinking, Lean UX, Jobs to be Done, Scrum, Kanban, OKR</p>
+  <p><strong>Herramientas:</strong> Figma, FigJam, Maze, Hotjar, Amplitude, Jira, Notion, Miro</p>
+  <p><strong>Conocimientos de:</strong> HTML, CSS, Framer</p>
+</section>
+<!-- FIN:habilidades -->
+
+<!-- INICIO:experiencia -->
+<!-- Cargo y fechas en la misma línea, separados por " | ". Fechas con guion simple: Mar 2022 - Presente. -->
+<section class="seccion experiencia">
+  <h2>Experiencia Profesional</h2>
+
+  <div class="puesto">
+    <div class="puesto-encabezado">
+      <span class="cargo">Product Designer</span> | <span class="fechas">Mar 2022 - Presente</span>
+    </div>
+    <p class="empresa">Fintech Ejemplo, Montevideo, Uruguay <span class="nota">| Billetera digital, 400.000 usuarios activos</span></p>
+    <ul>
+      <li>Rediseñé el flujo de onboarding en Figma junto a 2 equipos de producto, reduciendo el abandono del registro de 38% a 22% en seis meses.</li>
+      <li>Creé y mantengo la librería de componentes del producto (80 componentes y 120 tokens), adoptada por 5 diseñadores y 3 equipos de desarrollo, con documentación de uso y versionado mensual.</li>
+      <li>Realicé 24 tests de usabilidad en 2023 y 2024 con Maze, que priorizaron 11 mejoras del roadmap de pagos y transferencias.</li>
+      <li>Colaboré con analítica en la definición de eventos de Amplitude para medir la adopción de nuevas funcionalidades y detectar fricciones.</li>
+      <li>Lideré la auditoría de accesibilidad de la app según WCAG 2.1 AA y coordiné con desarrollo la corrección de 46 problemas críticos.</li>
+    </ul>
+  </div>
+
+  <div class="puesto">
+    <div class="puesto-encabezado">
+      <span class="cargo">UX/UI Designer</span> | <span class="fechas">Feb 2019 - Feb 2022</span>
+    </div>
+    <p class="empresa">Tienda Ejemplo, Buenos Aires, Argentina <span class="nota">| E-commerce de electrónica</span></p>
+    <ul>
+      <li>Diseñé el checkout mobile, que aumentó la conversión en mobile un 14% (estimado por el equipo de producto).</li>
+      <li>Documenté 40 patrones de interfaz para el equipo de frontend, reduciendo consultas de handoff y retrabajo en cada sprint.</li>
+      <li>Rediseñé la búsqueda y los filtros del catálogo a partir de 12 entrevistas con clientes, mejorando el uso de filtros un 30%.</li>
+      <li>Diseñé y prototipé el programa de puntos para clientes frecuentes, desde el discovery hasta el lanzamiento en web y app.</li>
+    </ul>
+  </div>
+
+  <div class="puesto">
+    <div class="puesto-encabezado">
+      <span class="cargo">Diseñadora UI Junior</span> | <span class="fechas">Ene 2017 - Ene 2019</span>
+    </div>
+    <p class="empresa">Agencia Ejemplo, Córdoba, Argentina <span class="nota">| Agencia de productos digitales</span></p>
+    <ul>
+      <li>Diseñé interfaces para 9 sitios y apps de clientes de salud, educación y turismo, desde wireframes hasta piezas finales, presentando cada entrega directamente a los clientes.</li>
+      <li>Armé la primera guía de estilos compartida de la agencia, usada después como base en todos los proyectos nuevos y en la capacitación de 4 diseñadores que se sumaron al equipo.</li>
+    </ul>
+  </div>
+</section>
+<!-- FIN:experiencia -->
+
+<!-- INICIO:educacion -->
+<!-- Título del estudio y fecha en la misma línea, separados por " | ". -->
+<section class="seccion educacion">
+  <h2>Educación</h2>
+  <div class="entrada">
+    <div class="entrada-encabezado">
+      <span class="entrada-titulo">Diplomatura en Experiencia de Usuario</span> | <span class="fechas">Nov 2020</span>
+    </div>
+    <p>Instituto Ejemplo, Uruguay <span class="detalle">| Proyecto final: rediseño del portal de trámites de un municipio</span></p>
+  </div>
+  <div class="entrada">
+    <div class="entrada-encabezado">
+      <span class="entrada-titulo">Licenciatura en Diseño Multimedia</span> | <span class="fechas">Dic 2018</span>
+    </div>
+    <p>Universidad Ejemplo, Argentina</p>
+  </div>
+</section>
+<!-- FIN:educacion -->
+
+<!-- INICIO:certificaciones -->
+<section class="seccion certificaciones">
+  <h2>Certificaciones y Formación</h2>
+  <ul class="compacta">
+    <li>Google UX Design Professional Certificate, Coursera | 2021</li>
+    <li>Design Systems con Figma, Plataforma Ejemplo (24 horas) | 2022</li>
+    <li>Curso de Accesibilidad Web, Institución Ejemplo (40 horas) | 2023</li>
+  </ul>
+</section>
+<!-- FIN:certificaciones -->
+
+<!-- INICIO:proyectos -->
+<!-- Opcional. Borra la sección completa con sus marcadores si no suma a la oferta. -->
+<section class="seccion proyectos">
+  <h2>Proyectos</h2>
+  <ul class="compacta">
+    <li><strong>Mentora voluntaria</strong>, comunidad de diseño ejemplo: acompañé a 12 personas en su primer portfolio y organicé 3 revisiones abiertas de casos de estudio | 2024</li>
+  </ul>
+</section>
+<!-- FIN:proyectos -->
+
+<!-- INICIO:idiomas -->
+<section class="seccion idiomas">
+  <h2>Idiomas</h2>
+  <p>Español (nativo) | Inglés (avanzado, uso diario en el trabajo)</p>
+</section>
+<!-- FIN:idiomas -->
+
+</main>
+</body>
+</html>

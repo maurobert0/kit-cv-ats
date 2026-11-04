@@ -63,7 +63,7 @@ out += "\n\n---\n\nFIN DEL PROMPT. Empieza ahora con la bienvenida.\n"
 g = cuerpo("generador-cv-ats/SKILL.md")
 g = re.sub(r"## Archivos de este skill.*?(?=\n## Paso 0)", """## Material de este prompt
 
-Debajo de estas instrucciones tienes cuatro secciones: "Análisis de la oferta", "Reglas ATS", "Redacción e idioma" y "Template clasico". Léelas completas antes de generar el primer CV de la conversación.
+Debajo de estas instrucciones tienes cinco secciones: "Análisis de la oferta", "Reglas ATS", "Redacción e idioma", "Template clasico" y "Otros estilos". Léelas completas antes de generar el primer CV de la conversación.
 
 """, g, flags=re.S)
 g = aplicar(g, [
@@ -72,7 +72,8 @@ g = aplicar(g, [
     ("siguiendo `reglas-ats.md` y `redaccion-e-idioma.md`", "siguiendo las secciones \"Reglas ATS\" y \"Redacción e idioma\""),
     ("Si puedes ejecutar Python, usa `scripts/keyword_check.py`. Si no, haz la verificación a mano con la misma lógica. Después pasa el checklist de `reglas-ats.md`.", "Revisa a mano la cobertura de keywords (cada keyword que la persona tiene aparece al menos una vez en contexto y ninguna más de 5 veces) y pasa el checklist de la sección \"Reglas ATS\"."),
     ("(ver `analisis-oferta.md`)", "(ver la sección \"Análisis de la oferta\")"),
-    ("Si no eligió template, usa el que haya usado antes en la conversación o `clasico`.", "Usa el template de la sección \"Template clasico\". Si la persona te pega otro template del kit, usa ese."),
+    ("Si la persona no eligió estilo y es su primer CV de la conversación, ofrécele los seis con una línea de descripción cada uno (sacadas de `templates/LEEME.md`) y usa `clasico` si no tiene preferencia. Después usa siempre el mismo salvo que pida cambiarlo.",
+     "Si la persona no eligió estilo y es su primer CV de la conversación, ofrécele los de la sección \"Otros estilos\" con una línea cada uno y usa el template clasico si no tiene preferencia. Después usa siempre el mismo salvo que pida cambiarlo. Si te pega el HTML de uno de esos estilos, úsalo en lugar del template clasico."),
 ])
 anexos = [("Análisis de la oferta", "generador-cv-ats/references/analisis-oferta.md"),
           ("Reglas ATS", "generador-cv-ats/references/reglas-ats.md"),
@@ -84,6 +85,17 @@ for titulo, f in anexos:
     out += f"\n\n---\n\n# {titulo}\n\n" + aplicar(c, [])
 tpl = (S / "generador-cv-ats/templates/clasico.html").read_text(encoding="utf-8")
 out += "\n\n---\n\n# Template clasico\n\nCopia este HTML completo para cada CV y reemplaza solo el contenido entre marcadores, siguiendo el comentario de instrucciones que trae adentro.\n\n```html\n" + tpl.strip() + "\n```\n"
+otros = [
+    ("editorial", "Cálido y editorial, con papel crema, encabezado verde y nombre en serif."),
+    ("grotesk", "Alto contraste, con encabezado negro, franja lima y secciones enmarcadas."),
+    ("analitico", "Informe de datos, con papel marfil, nombre en serif liviana y titular resaltado en naranja."),
+    ("suizo", "Blanco y negro, con el nombre y el titular en dos tonos y un cuadrado rojo junto a cada título."),
+    ("cercano", "Amable y redondeado, con bloque verde bosque, nombre en menta y títulos en píldora."),
+]
+out += "\n---\n\n# Otros estilos\n\nSi la persona no eligió estilo, descríbele estas cinco opciones en una línea cada una y usa el template clasico si no tiene preferencia. Si pega el HTML de uno de estos templates, úsalo en lugar del template clasico.\n\n"
+for nombre, desc in otros:
+    url = f"https://raw.githubusercontent.com/maurobert0/kit-cv-ats/main/skills/generador-cv-ats/templates/{nombre}.html"
+    out += f"- **{nombre}.** {desc} HTML: {url}\n"
 out += "\n---\n\nFIN DEL PROMPT. Saluda en una línea y pide el perfil profesional y la oferta.\n"
 (R / "prompts/02-generador-cv.md").write_text(out, encoding="utf-8")
 print("ok")

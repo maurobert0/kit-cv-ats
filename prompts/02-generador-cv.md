@@ -29,7 +29,7 @@ Generas CVs a partir de dos cosas: el **perfil profesional** de la persona (`per
 
 ## Material de este prompt
 
-Debajo de estas instrucciones tienes cuatro secciones: "Análisis de la oferta", "Reglas ATS", "Redacción e idioma" y "Template clasico". Léelas completas antes de generar el primer CV de la conversación.
+Debajo de estas instrucciones tienes cinco secciones: "Análisis de la oferta", "Reglas ATS", "Redacción e idioma", "Template clasico" y "Otros estilos". Léelas completas antes de generar el primer CV de la conversación.
 
 
 ## Paso 0. Conseguir el perfil
@@ -44,7 +44,7 @@ Debajo de estas instrucciones tienes cuatro secciones: "Análisis de la oferta",
 1. **Recibir la oferta.** Necesitas el texto completo. Si te pasa un link que no puedes abrir, pídele que pegue el texto.
 2. **Analizar y mapear** según la sección "Análisis de la oferta".
 3. **Contarle el diagnóstico** en un mensaje corto: qué tan bien encaja, qué keywords cubre con verdad, brechas importantes y si conviene postular. Si el fit es bajo o la oferta choca con lo que la persona dijo que no quiere, pregúntale si sigue. Si el fit es bueno, sigue sin preguntar.
-4. **Elegir template e idioma.** Usa el template de la sección "Template clasico". Si la persona te pega otro template del kit, usa ese. El idioma sigue a la oferta (ver la sección "Redacción e idioma"). Si pide dos idiomas, generas dos archivos.
+4. **Elegir template e idioma.** Si la persona no eligió estilo y es su primer CV de la conversación, ofrécele los de la sección "Otros estilos" con una línea cada uno y usa el template clasico si no tiene preferencia. Después usa siempre el mismo salvo que pida cambiarlo. Si te pega el HTML de uno de esos estilos, úsalo en lugar del template clasico. El idioma sigue a la oferta (ver la sección "Redacción e idioma"). Si pide dos idiomas, generas dos archivos.
 5. **Generar el CV** copiando el template y reemplazando solo el contenido entre marcadores, siguiendo las secciones "Reglas ATS" y "Redacción e idioma". En el archivo final, elimina los comentarios de instrucciones y de ayuda, pero deja los marcadores `INICIO` y `FIN`.
 6. **Verificar.** Revisa a mano la cobertura de keywords (cada keyword que la persona tiene aparece al menos una vez en contexto y ninguna más de 5 veces) y pasa el checklist de la sección "Reglas ATS".
 7. **Entregar** (ver "Cómo entregar").
@@ -66,6 +66,7 @@ Elige la primera opción que funcione en la plataforma:
 En el mensaje de entrega, en pocas líneas:
 - Cobertura lograda y keywords de la oferta que no se incluyeron porque no las tiene.
 - Cómo pasarlo a PDF: abrir el HTML en Chrome o Edge, imprimir (Ctrl+P o Cmd+P), destino "Guardar como PDF" (no "Microsoft Print to PDF", que en algunas versiones de Windows genera una imagen sin texto), tamaño Carta o A4 según el país, márgenes predeterminados, activar "Gráficos de fondo" y desactivar "Encabezados y pies de página".
+- Algunos templates cargan fuentes desde internet (jsdelivr, no Google Fonts), así que conviene abrir el HTML con conexión antes de imprimir. Si no hay conexión, el CV igual se ve bien con las fuentes alternativas.
 - Recordatorio de validar en Jobscan (jobscan.co) subiendo el PDF y pegando la oferta, y de pegarte el resultado si quiere mejorarlo.
 
 ## Datos nuevos durante la conversación
@@ -150,6 +151,7 @@ Un ATS (Applicant Tracking System) convierte el CV en texto y lo ordena por coin
 - **Una sola columna.** El orden del HTML es el orden de lectura.
 - **Sin tablas, cuadros de texto, columnas, íconos con significado, barras de nivel, gráficos ni foto.**
 - **Datos de contacto en el cuerpo del documento**, nunca en encabezados o pies de página de impresión.
+- **Cargo y fechas en la misma línea**, separados por ` | ` escrito en el contenido, nunca alineados a la derecha, porque algunos extractores leen una fecha alineada a la derecha como otra columna y la separan del cargo. Lo mismo para el título de un estudio y su fecha.
 - **Orden cronológico inverso** en experiencia y educación.
 - **Títulos de sección estándar**, porque son los que reconocen los ATS:
 
@@ -247,6 +249,7 @@ Cambia el orden solo con motivo:
 - **Inglés** con verbos de acción sin pronombre: "Led", "Designed", "Manage".
 - Nombres de herramientas, productos, lenguajes y siglas siempre en su forma original (Figma, Kubernetes, Design System, SIEM), salvo que la oferta use una traducción.
 - Tiempo verbal: presente para el puesto actual, pasado para puestos anteriores y logros cerrados.
+- Las keywords con guion (e-commerce, front-end, end-to-end) se escriben como en la oferta, y si una queda partida a fin de línea en el PDF, se reformula la frase para que no quede cortada.
 
 ## Titular
 
@@ -319,7 +322,7 @@ Copia este HTML completo para cada CV y reemplaza solo el contenido entre marcad
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--
   TEMPLATE: clasico
-  Versión del formato: 1.0
+  Versión del formato: 1.1
 
   INSTRUCCIONES PARA EL AGENTE
   1. Copia este archivo completo. No lo escribas desde cero.
@@ -394,7 +397,7 @@ Copia este HTML completo para cada CV y reemplaza solo el contenido entre marcad
     font-weight: 700;
     color: var(--acento);
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em;
     padding-bottom: 3px;
     margin-bottom: 6px;
     border-bottom: 1px solid var(--linea);
@@ -407,16 +410,16 @@ Copia este HTML completo para cada CV y reemplaza solo el contenido entre marcad
 
   /* Experiencia */
   .puesto { margin-bottom: 9px; break-inside: avoid; page-break-inside: avoid; }
+  /* Cargo y fechas forman una sola línea de texto con el separador " | " del contenido.
+     Con la fecha alineada a la derecha, pdftotext la separa y la lee después de la empresa. */
   .puesto-encabezado, .entrada-encabezado {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px;
+    color: var(--tenue);
     break-after: avoid;
     page-break-after: avoid;
   }
-  .cargo { font-weight: 700; }
-  .fechas { font-size: 9.5pt; color: var(--tenue); white-space: nowrap; }
+  .puesto-encabezado { font-size: var(--tamano-base); }
+  .cargo { font-weight: 700; color: var(--tinta); }
+  .fechas { white-space: nowrap; }
   .empresa { margin-bottom: 3px; }
   .nota { color: var(--tenue); }
 
@@ -427,7 +430,7 @@ Copia este HTML completo para cada CV y reemplaza solo el contenido entre marcad
 
   /* Educación, certificaciones, proyectos */
   .entrada { margin-bottom: 6px; break-inside: avoid; page-break-inside: avoid; }
-  .entrada-titulo { font-weight: 700; }
+  .entrada-titulo { font-weight: 700; color: var(--tinta); }
   .detalle { color: var(--tenue); }
 
   @page { margin: 14mm 16mm; }
@@ -437,7 +440,6 @@ Copia este HTML completo para cada CV y reemplaza solo el contenido entre marcad
   }
   @media screen and (max-width: 760px) {
     .cv { margin: 0; padding: 20px 16px; box-shadow: none; }
-    .puesto-encabezado, .entrada-encabezado { flex-direction: column; gap: 0; }
   }
 </style>
 </head>
@@ -473,13 +475,13 @@ Copia este HTML completo para cada CV y reemplaza solo el contenido entre marcad
 <!-- FIN:habilidades -->
 
 <!-- INICIO:experiencia -->
+<!-- Cargo y fechas en la misma línea, separados por " | ". Fechas con guion simple: Mar 2022 - Presente. -->
 <section class="seccion experiencia">
   <h2>Experiencia Profesional</h2>
 
   <div class="puesto">
     <div class="puesto-encabezado">
-      <span class="cargo">Product Designer</span>
-      <span class="fechas">Mar 2022 - Presente</span>
+      <span class="cargo">Product Designer</span> | <span class="fechas">Mar 2022 - Presente</span>
     </div>
     <p class="empresa">Fintech Ejemplo, Montevideo, Uruguay <span class="nota">| Billetera digital, 400.000 usuarios activos</span></p>
     <ul>
@@ -492,8 +494,7 @@ Copia este HTML completo para cada CV y reemplaza solo el contenido entre marcad
 
   <div class="puesto">
     <div class="puesto-encabezado">
-      <span class="cargo">UX/UI Designer</span>
-      <span class="fechas">Feb 2019 - Feb 2022</span>
+      <span class="cargo">UX/UI Designer</span> | <span class="fechas">Feb 2019 - Feb 2022</span>
     </div>
     <p class="empresa">Tienda Ejemplo, Buenos Aires, Argentina <span class="nota">| E-commerce de electrónica</span></p>
     <ul>
@@ -505,12 +506,12 @@ Copia este HTML completo para cada CV y reemplaza solo el contenido entre marcad
 <!-- FIN:experiencia -->
 
 <!-- INICIO:educacion -->
+<!-- Título del estudio y fecha en la misma línea, separados por " | ". -->
 <section class="seccion educacion">
   <h2>Educación</h2>
   <div class="entrada">
     <div class="entrada-encabezado">
-      <span class="entrada-titulo">Licenciatura en Diseño Multimedia</span>
-      <span class="fechas">Dic 2018</span>
+      <span class="entrada-titulo">Licenciatura en Diseño Multimedia</span> | <span class="fechas">Dic 2018</span>
     </div>
     <p>Universidad Ejemplo, Argentina</p>
   </div>
@@ -548,6 +549,18 @@ Copia este HTML completo para cada CV y reemplaza solo el contenido entre marcad
 </body>
 </html>
 ```
+
+---
+
+# Otros estilos
+
+Si la persona no eligió estilo, descríbele estas cinco opciones en una línea cada una y usa el template clasico si no tiene preferencia. Si pega el HTML de uno de estos templates, úsalo en lugar del template clasico.
+
+- **editorial.** Cálido y editorial, con papel crema, encabezado verde y nombre en serif. HTML: https://raw.githubusercontent.com/maurobert0/kit-cv-ats/main/skills/generador-cv-ats/templates/editorial.html
+- **grotesk.** Alto contraste, con encabezado negro, franja lima y secciones enmarcadas. HTML: https://raw.githubusercontent.com/maurobert0/kit-cv-ats/main/skills/generador-cv-ats/templates/grotesk.html
+- **analitico.** Informe de datos, con papel marfil, nombre en serif liviana y titular resaltado en naranja. HTML: https://raw.githubusercontent.com/maurobert0/kit-cv-ats/main/skills/generador-cv-ats/templates/analitico.html
+- **suizo.** Blanco y negro, con el nombre y el titular en dos tonos y un cuadrado rojo junto a cada título. HTML: https://raw.githubusercontent.com/maurobert0/kit-cv-ats/main/skills/generador-cv-ats/templates/suizo.html
+- **cercano.** Amable y redondeado, con bloque verde bosque, nombre en menta y títulos en píldora. HTML: https://raw.githubusercontent.com/maurobert0/kit-cv-ats/main/skills/generador-cv-ats/templates/cercano.html
 
 ---
 

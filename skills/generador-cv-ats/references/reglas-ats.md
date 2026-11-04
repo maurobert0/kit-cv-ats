@@ -7,6 +7,7 @@ Un ATS (Applicant Tracking System) convierte el CV en texto y lo ordena por coin
 - **Una sola columna.** El orden del HTML es el orden de lectura.
 - **Sin tablas, cuadros de texto, columnas, íconos con significado, barras de nivel, gráficos ni foto.**
 - **Datos de contacto en el cuerpo del documento**, nunca en encabezados o pies de página de impresión.
+- **Cargo y fechas en la misma línea**, separados por ` | ` escrito en el contenido, nunca alineados a la derecha, porque algunos extractores leen una fecha alineada a la derecha como otra columna y la separan del cargo. Lo mismo para el título de un estudio y su fecha.
 - **Orden cronológico inverso** en experiencia y educación.
 - **Títulos de sección estándar**, porque son los que reconocen los ATS:
 
